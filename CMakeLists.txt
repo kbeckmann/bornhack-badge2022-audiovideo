@@ -17,6 +17,9 @@ project(pico-st7735 C CXX ASM)
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
+
+set(TFT_OPTIONS TFT_ENABLE_BLACK TFT_ENABLE_RESET  
+            CACHE STRING "TFT options/functions")
 # library configuration (override if necessary)
 set(SPI_TFT_PORT "spi0" CACHE STRING "TFT spi port-name")
 set(SPI_TFT_CS   "21"    CACHE STRING "TFT CS  pin number")
