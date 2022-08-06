@@ -12,8 +12,6 @@
 #include "pico/stdlib.h"
 #include "hardware/spi.h"
 #include "hw.h"
-#include "tst_funcs.h"
-#include "ST7735_TFT.h"
 
 #include "color.h"
 #include "color_invert.h"

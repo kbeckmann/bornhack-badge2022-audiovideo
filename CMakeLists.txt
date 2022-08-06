@@ -22,9 +22,6 @@ set(SPI_TFT_PORT "spi0" CACHE STRING "TFT spi port-name")
 set(SPI_TFT_CS   "21"    CACHE STRING "TFT CS  pin number")
 set(SPI_TFT_DC   "7"   CACHE STRING "TFT DC  pin number")
 set(SPI_TFT_RST  "6"   CACHE STRING "TFT RST pin number")
-set(TFT_OPTIONS TFT_ENABLE_BLACK TFT_ENABLE_RESET TFT_ENABLE_TEXT TFT_ENABLE_SHAPES
-                TFT_ENABLE_ROTATE TFT_ENABLE_SCROLL TFT_ENABLE_ALL
-            CACHE STRING "TFT options/functions")
 
 # TFT options/functions. Complete list:
 #  - TFT_ENABLE_BLACK

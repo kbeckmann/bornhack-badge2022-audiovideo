@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 
 project(demo)
 
-add_executable(${PROJECT_NAME} demo.c tst_funcs.c)
+add_executable(${PROJECT_NAME} demo.c)
 
 pico_set_program_name(${PROJECT_NAME} "pico-st7735")
 pico_set_program_version(${PROJECT_NAME} "0.1")
