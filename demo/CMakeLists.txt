@@ -16,3 +16,11 @@ target_link_libraries(${PROJECT_NAME} PUBLIC lib-st7735)
 target_link_libraries(${PROJECT_NAME} PUBLIC hardware_spi)
 
 pico_add_extra_outputs(${PROJECT_NAME})
+
+target_compile_definitions(
+  lib-st7735
+  PUBLIC
+  PIN_TFT_RST=${SPI_TFT_RST}
+  PIN_TFT_DC=${SPI_TFT_DC}
+  PIN_TFT_CS=${SPI_TFT_CS}
+  )

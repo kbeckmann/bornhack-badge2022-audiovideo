@@ -15,13 +15,16 @@
 #include "tst_funcs.h"
 #include "ST7735_TFT.h"
 
+#include "color.h"
+#include "color_invert.h"
+
 // ---------------------------------------------------------------------------
 // hardware-specific intialization
 // SPI_* constants from CMakeLists.txt or user.h
 
 void init_hw() {
   stdio_init_all();
-  spi_init(SPI_PORT, 1000000);                // SPI with 1Mhz
+  spi_init(SPI_PORT, 40000000);                // SPI with 40Mhz
   gpio_set_function(SPI_RX, GPIO_FUNC_SPI);
   gpio_set_function(SPI_SCK,GPIO_FUNC_SPI);
   gpio_set_function(SPI_TX, GPIO_FUNC_SPI);
@@ -37,77 +40,31 @@ void init_hw() {
   gpio_init(SPI_TFT_RST);
   gpio_set_dir(SPI_TFT_RST, GPIO_OUT);
   gpio_put(SPI_TFT_RST, 0);
+
+  gpio_init(13);
+  gpio_set_dir(13, GPIO_OUT);
+  gpio_put(13, 1);
 }
 
 
 // ---------------------------------------------------------------------------
 // main loop
 
+static void draw_buffer(uint16_t *buf, int x, int y, int width, int height)
+{
+  setAddrWindow(x, y, x + width - 1, y + height - 1);
+  pushColors(buf, width * height);
+}
+
 int main() {
   init_hw();
-#ifdef TFT_ENABLE_BLACK
   TFT_BlackTab_Initialize();
-#elif defined(TFT_ENABLE_GREEN)
-  TFT_GreenTab_Initialize();
-#elif defined(TFT_ENABLE_RED)
-  TFT_RedTab_Initialize();
-#elif defined(TFT_ENABLE_GENERIC)
-  TFT_ST7735B_Initialize();
-#endif
-  setTextWrap(true);
-  TEST_DELAY1();
-  fillScreen(ST7735_BLACK);
 
-#if defined(ENABLE_TEST1)
-  Test1();
-#endif
-#if defined(ENABLE_TEST1A)
-  Test1A();
-#endif
-#if defined(ENABLE_TEST2)
-  Test2();
-#endif
-#if defined(ENABLE_TEST3)
-  Test3();
-#endif
-#if defined(ENABLE_TEST4)
-  Test4();
-#endif
-#if defined(ENABLE_TEST5)
-  Test5();
-#endif
-#if defined(ENABLE_TEST6)
-  Test6();
-#endif
-#if defined(ENABLE_TEST7)
-  Test7();
-#endif
-#if defined(ENABLE_TEST8)
-  Test8();
-#endif
-#if defined(ENABLE_TEST9)
-  Test9();
-#endif
-#if defined(ENABLE_TEST9A)
-  Test9A();
-#endif
-
-#if defined(TFT_ENABLE_TEXT)
-  #if defined(ENABLE_TESTR) && defined(TFT_ENABLE_ROTATE)
-  for (size_t i = 0; i < 4; i++) {
-    setRotation(i);
-  #endif
-    fillScreen(ST7735_BLACK);
-    drawText(10, 10, "Test over!", ST7735_WHITE, ST7735_BLACK, 1);
-    drawFastHLine(0,0,80,ST7735_CYAN);
-    drawFastHLine(0,25,80,ST7735_CYAN);
-    drawFastVLine(0,0,25,ST7735_CYAN);
-    drawFastVLine(80,0,25,ST7735_CYAN);
-  #if defined(ENABLE_TESTR) && defined(TFT_ENABLE_ROTATE)
-    TEST_DELAY1();
+  while(1) {
+    draw_buffer((uint16_t *) color_rgb, 0, 0, 128, 128);
+    draw_buffer((uint16_t *) color_invert_rgb, 0, 0, 128, 128);
   }
-  #endif
-#endif
+
   while(1);
   return 0;
 }

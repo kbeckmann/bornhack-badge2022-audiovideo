@@ -622,6 +622,15 @@ void pushColor(uint16_t color){
   tft_cs_high() ;
 }
 
+void pushColors(uint16_t *colors, int len){
+  tft_dc_high();
+  tft_cs_low();
+
+  spi_write_blocking(SPI_TFT_PORT, colors, len * 2);
+
+  tft_cs_high() ;
+}
+
 
 // Init Green PCB version 
 #if defined TFT_ENABLE_GREEN

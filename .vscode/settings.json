@@ -6,5 +6,8 @@
               },    "launch" : {
       "visibility": "hidden"
                },
-     },
+    },
+    "files.associations": {
+      "color.h": "c"
+    },
 }

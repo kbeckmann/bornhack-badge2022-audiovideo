@@ -18,12 +18,12 @@ project(pico-st7735 C CXX ASM)
 pico_sdk_init()
 
 # library configuration (override if necessary)
-set(SPI_TFT_PORT "spi1" CACHE STRING "TFT spi port-name")
-set(SPI_TFT_CS   "9"    CACHE STRING "TFT CS  pin number")
-set(SPI_TFT_DC   "10"   CACHE STRING "TFT DC  pin number")
-set(SPI_TFT_RST  "11"   CACHE STRING "TFT RST pin number")
+set(SPI_TFT_PORT "spi0" CACHE STRING "TFT spi port-name")
+set(SPI_TFT_CS   "21"    CACHE STRING "TFT CS  pin number")
+set(SPI_TFT_DC   "7"   CACHE STRING "TFT DC  pin number")
+set(SPI_TFT_RST  "6"   CACHE STRING "TFT RST pin number")
 set(TFT_OPTIONS TFT_ENABLE_BLACK TFT_ENABLE_RESET TFT_ENABLE_TEXT TFT_ENABLE_SHAPES
-                TFT_ENABLE_ROTATE TFT_ENABLE_SCROLL
+                TFT_ENABLE_ROTATE TFT_ENABLE_SCROLL TFT_ENABLE_ALL
             CACHE STRING "TFT options/functions")
 
 # TFT options/functions. Complete list:
@@ -51,10 +51,10 @@ endforeach(opt)
 
 #program configuration (TODO: move to separate project)
 
-set(SPI_PORT "spi1" CACHE STRING "spi port-name")
-set(SPI_RX   "12"   CACHE STRING "RX  pin number")
-set(SPI_TX   "15"   CACHE STRING "TX  pin number")
-set(SPI_SCK  "14"   CACHE STRING "SCK pin number")
+set(SPI_PORT "spi0" CACHE STRING "spi port-name")
+set(SPI_RX   "9"   CACHE STRING "RX  pin number")
+set(SPI_TX   "23"   CACHE STRING "TX  pin number")
+set(SPI_SCK  "22"   CACHE STRING "SCK pin number")
 
 add_compile_definitions(SPI_PORT=${SPI_PORT})
 add_compile_definitions(SPI_RX=${SPI_RX})
@@ -82,3 +82,13 @@ endif()
 
 add_subdirectory(lib-st7735)
 add_subdirectory(demo)
+
+
+target_compile_definitions(
+  lib-st7735
+  PUBLIC
+  PIN_TFT_RST=${SPI_TFT_RST}
+  PIN_TFT_DC=${SPI_TFT_DC}
+  PIN_TFT_CS=${SPI_TFT_CS}
+  )
+
