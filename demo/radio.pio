@@ -1,0 +1,36 @@
+;
+; Copyright (c) 2020 Raspberry Pi (Trading) Ltd.
+;
+; SPDX-License-Identifier: BSD-3-Clause
+;
+
+; Side-set pin 0 is used for radio output
+
+.program radio
+.side_set 1 opt
+.wrap_target
+start:
+    pull noblock           ; Pull from FIFO to OSR if available, else copy X to OSR.
+    mov x, osr             ; Copy most-recently-pulled value back to scratch X
+    mov y, isr             ; ISR contains radio period. Y used as counter.
+
+countloop:
+    jmp x!=y radio_off side 1
+    jmp radio_on side 0
+radio_off:
+    jmp y-- countloop side 1
+radio_on:
+    mov x, x side 1
+    jmp y-- radio_on side 0
+.wrap
+
+
+% c-sdk {
+static inline void radio_program_init(PIO pio, uint sm, uint offset, uint pin) {
+   pio_gpio_init(pio, pin);
+   pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, true);
+   pio_sm_config c = radio_program_get_default_config(offset);
+   sm_config_set_sideset_pins(&c, pin);
+   pio_sm_init(pio, sm, offset, &c);
+}
+%}

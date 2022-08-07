@@ -153,6 +153,7 @@ void fillRect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint16_t color);
 void invertDisplay(bool i);
 void NormalDisplay(void);
 void pushColor(uint16_t color);
+void pushColors(const uint8_t *colors, int bytes);
 
 //Scroll
 #if defined TFT_ENABLE_SCROLL
