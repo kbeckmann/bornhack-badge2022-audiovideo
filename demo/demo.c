@@ -1,6 +1,8 @@
 // --------------------------------------------------------------------------
-// Demo program for the ST7735-library
+// Video and AM transmitter for the Bornhack Badge 2022.
+// Based on the Demo program for the ST7735-library
 //
+// Author: Konrad Beckmann
 // Author: Bernhard Bablok
 //
 // The code is based on work from Gavin Lyons, see
